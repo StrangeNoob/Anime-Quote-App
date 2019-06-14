@@ -11,7 +11,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 //firebase.auth.Auth.Persistence.LOCAL; 
-
 $(document).ready(function(){
 $("#btn-login").click( function(){
 
@@ -20,7 +19,10 @@ $("#btn-login").click( function(){
     var password = $("#password").val();
     console.log(password);
     console.log(email);
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+      console.log(user);
+    }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -30,3 +32,5 @@ $("#btn-login").click( function(){
     });
   });
 });
+
+

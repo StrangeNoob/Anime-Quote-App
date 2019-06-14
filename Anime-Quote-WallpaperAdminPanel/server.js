@@ -1,13 +1,14 @@
 const http = require('http');
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 const port = 3000;
-
 
 http.createServer((req, res) => {
   
   if(req.url == "/"){
-  fs.readFile("./Anime-Quote-WallpaperAdminPanel/public/index.html","UTF-8",function(err,html){
+    console.log('It reached here');
+    
+  fs.readFile("./public/index.html","UTF-8",function(err,html){
   res.writeHead(200,{"Content-Type":"text/html"});
   res.end(html);
   });
