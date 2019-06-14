@@ -7,7 +7,7 @@ const port = 3000;
 http.createServer((req, res) => {
   
   if(req.url == "/"){
-  fs.readFile("./public/index.html","UTF-8",function(err,html){
+  fs.readFile("./Anime-Quote-WallpaperAdminPanel/public/index.html","UTF-8",function(err,html){
   res.writeHead(200,{"Content-Type":"text/html"});
   res.end(html);
   });
