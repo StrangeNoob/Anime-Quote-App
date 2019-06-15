@@ -4,9 +4,8 @@ const path = require('path');
 const port = 3000;
 
 http.createServer((req, res) => {
-  
+  console.log('The Server is Running in : http://127.0.0.1:3000/');
   if(req.url == "/"){
-    console.log('The Server is Running in : http://127.0.0.1:3000/');
     fs.readFile("./Anime-Quote-WallpaperAdminPanel/public/index.html","UTF-8",function(err,html){
     res.writeHead(200,{"Content-Type":"text/html"});
     res.end(html);

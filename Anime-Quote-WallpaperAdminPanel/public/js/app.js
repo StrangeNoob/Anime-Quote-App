@@ -13,7 +13,6 @@ firebase.initializeApp(firebaseConfig);
 firebase.auth.Auth.Persistence.LOCAL; 
 $(document).ready(function(){
 $("#btn-login").click( function(){
-
     var  email = $("#email").val();
     var password = $("#password").val();
     console.log(password);
@@ -33,7 +32,7 @@ $("#btn-login").click( function(){
 
   $("#btn-logout").click(function(){
     firebase.auth().signOut();
-});
+  });
 });
 
 

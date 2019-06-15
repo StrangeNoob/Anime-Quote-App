@@ -50,8 +50,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="switchView('views/categories.html')">
-                            <span class="text-dark">Categories</span>
+                        <a class="nav-link" href="#" onclick="switchView('views/editors.html')">
+                            <span class="text-dark">Editors</span>
                         </a>
                     </li>
                 </ul>
@@ -75,7 +75,15 @@
                         window.location.href = "index.html";
                     }
                 });
-    
+                function switchView(view){
+                    console.log(view);
+                    $.post({
+                    url:view,
+                    cache: false,  
+                    }).then(function(data){
+                        $("#container").html(data);
+                    });
+                }
         </script>
     </body>
 </html>
