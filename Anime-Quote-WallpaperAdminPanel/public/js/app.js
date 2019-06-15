@@ -10,11 +10,10 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-//firebase.auth.Auth.Persistence.LOCAL; 
+firebase.auth.Auth.Persistence.LOCAL; 
 $(document).ready(function(){
 $("#btn-login").click( function(){
 
-    alert("Hi User !!!");
     var  email = $("#email").val();
     var password = $("#password").val();
     console.log(password);
@@ -31,6 +30,10 @@ $("#btn-login").click( function(){
       console.log(errorMessage);
     });
   });
+
+  $("#btn-logout").click(function(){
+    firebase.auth().signOut();
+});
 });
 
 
