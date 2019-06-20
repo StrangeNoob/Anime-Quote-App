@@ -26,12 +26,13 @@
             </div>
             <div class="form-group">
                 <div class="progress">
-                    <div class="progrss-bar" id="upload-progress" style="width:0%">0%</div>
+                    <div class="progrss-bar" id="upload-progress" style="width:85%">0%</div>
                 </div>    
             </div>
             <div class="form-group">
-                    <button id="save-editor" type="button" class="btn btn-primary">Save</button>
-                </div>
+                <button id="save-editor" type="button" class="btn btn-primary">Save</button>
+                <button id="reset-editor" type="button" class="btn btn-primary" onclick="resetForm()">Reset</button>
+            </div>
         </form>
         <div id="result">
 
@@ -39,10 +40,28 @@
     </div>
     <div class="col-lg-7">
         <h4> Saved Editors </h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Thumbnail</th>
+                </tr>
+            </thead>
+            <tbody id="editors">
+
+            </tbody>
+        </table>
+
+
     </div>
-</div>
+</div>   
 <script>
-        var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
+    var user = firebase.auth().currentUser;
+
+    if(user)
+    {
+      console.log(user.uid);
+       var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
        $("#selected-thumbnail").hide();
         function previewThumbnail(thumbnail){
             if(thumbnail.files && thumbnail.files[0]){
@@ -96,10 +115,9 @@
                 var uploadTask = storageRef.put(thumbnail);
                 uploadTask.on("state_changed", 
                     function progress(snapshot){
-                        console.log("Its in database progreassbar");
                         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
                         $("#upload-progress").html(Math.round(percentage) + "%");
-                        $("#upload-progress").attr("style", "width:"+percentage + "%");
+                        $("#upload-progress").attr("style",'width:'+ percentage + '%');
                     }, 
                     function error(err){
                     }, 
@@ -108,7 +126,7 @@
                             var edi = {
                                 "thumbnail": downloadURL, 
                             };
-                            database.set(cat, function(err){
+                            database.set(edi, function(err){
                                 if(err){
                                     $("#result").attr("class", "alert alert-danger");
                                     $("#result").html(err.message);
@@ -128,10 +146,32 @@
     function resetForm(){
        $("#editors-form")[0].reset(); 
        $("#selected-thumbnail").fadeOut();
-       $("#upload-progress").html("Completed");
+       $("#upload-progress").html("0%");
     }
-    
-
-        
+/*
+    var dbEditors = firebase.database().ref("Editors");
+    dbEditors.on("value", function(editors){
+        if(editors.exists()){
+            var editorshtml = ""; 
+            editors.forEach(function(editor){
+                
+                Editorshtml += "<tr>";
+                //for editor's name
+                Editorshtml += "<td>";
+                Editorshtml += editor.key;
+                Editorshtml += "</td>";
+                
+                //for editor's thumbnail
+                Editorshtml+= "<td> <img width='250' height='150' src='";
+                Editorshtml += editor.val().thumbnail;
+                Editorshtml += "' /></td>";
+                
+                Editorshtml += "</tr>";
+            });
+            $("#Editors").html(Editorshtml);
+        }
+    });
+*/
+ }     
 </script>
             
