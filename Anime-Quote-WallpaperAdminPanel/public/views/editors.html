@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <div class="progress">
-                    <div class="progrss-bar" id="upload-progress" style="width:85%">0%</div>
+                    <div class="progress-bar" id="progress" style="width:0%">0%</div>
                 </div>    
             </div>
             <div class="form-group">
@@ -75,7 +75,7 @@
         }
         $("#editor-thumbnail").change(function(){
             previewThumbnail(this);
-        });
+        }); 
         
     $("#save-editor").click(function(){
         $("#editor-name").removeClass("is-invalid");
@@ -107,6 +107,7 @@
         }
         else{
                 //1. upload the selected thumbnail to firebase storage
+                
                 console.log("Its in database Else");
                 var name = thumbnail["name"];
                 var ext = name.substring(name.lastIndexOf("."), name.length);
@@ -115,9 +116,10 @@
                 var uploadTask = storageRef.put(thumbnail);
                 uploadTask.on("state_changed", 
                     function progress(snapshot){
-                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
-                        $("#upload-progress").html(Math.round(percentage) + "%");
-                        $("#upload-progress").attr("style",'width:'+ percentage + '%');
+                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log("Progrss is around "+ percentage+"%");
+                        $("#progress").html(Math.round(percentage)+"%");
+                        $("#progress").attr("style", "width: "+percentage + "%");
                     }, 
                     function error(err){
                     }, 
@@ -148,12 +150,13 @@
        $("#selected-thumbnail").fadeOut();
        $("#upload-progress").html("0%");
     }
-/*
+
     var dbEditors = firebase.database().ref("Editors");
-    dbEditors.on("value", function(editors){
-        if(editors.exists()){
-            var editorshtml = ""; 
-            editors.forEach(function(editor){
+    dbEditors.on("value", function(Editors){
+        if(Editors.exists()){
+            console.log("You are in the Display Column");
+            var Editorshtml = ""; 
+            Editors.forEach(function(editor){
                 
                 Editorshtml += "<tr>";
                 //for editor's name
@@ -168,10 +171,10 @@
                 
                 Editorshtml += "</tr>";
             });
-            $("#Editors").html(Editorshtml);
+            $("#editors").html(Editorshtml);
         }
     });
-*/
+
  }     
 </script>
             
