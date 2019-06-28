@@ -1,62 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import './bottom_navy_bar.dart';
+import './splashscreen.dart';
+import './HomeScreen.dart';
+import './Favourites.dart';
+import './Editors.dart';
+import './Settings.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      title: 'Anime Qoutes',
-      home: HomePage(),
-    );
-  }
+void main(){
+
+
+  runApp(MaterialApp(
+      home: SplashScreen(),
+      )
+  );
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return HomePageState();
-  }
-}
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
 
-class HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  int _index = 0;
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin  {
+  int currentIndex = 0;
   TabController _controller;
-
-  List<String> pages = [
-    'Home',
-    'Favourites',
-    'Editors',
-    'Settings',
+  List<Widget> pages = [
+    Homescreen(),
+    Favourites(),
+    Editors(),
+    Settings()
   ];
 
   @override
-  void initState() {
+  void initState()
+  {
+   // new AnimatedSplashScreen();
     super.initState();
     _controller = TabController(
         vsync: this,
         length: pages.length,
-        initialIndex: _index
+        initialIndex: currentIndex
     );
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
         controller: _controller,
-        children: pages.map((title) {
-          return Center(
-            child: Text(
-              '$title',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 52),
-            ),
-          );
-        }).toList(),
+        children: pages.toList(),
       ),
       appBar: AppBar(
         elevation: 1,
@@ -65,9 +64,14 @@ class HomePageState extends State<HomePage>
       ),
       bottomNavigationBar: BottomNavyBar(
         backgroundColor: Colors.black,
+        selectedIndex: currentIndex,
+        showElevation: true,
         onItemSelected: (index) => setState(() {
-          _index = index;
-          _controller.animateTo(_index);
+          currentIndex = index;
+          _controller.animateTo(currentIndex);
+          setState(() {
+            print(index);
+          });
         }),
         items: [
           BottomNavyBarItem(
