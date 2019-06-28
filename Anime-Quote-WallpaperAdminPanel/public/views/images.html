@@ -16,14 +16,6 @@
             </div>
 
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" />
-                <div class="invalid-feedback">
-                    Please enter title 
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label for="wallpaper">Wallpaper</label>
                 <input type="file" class="form-control" id="wallpaper" />
 
@@ -75,15 +67,8 @@
     var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
     
     $("#btn-save").click(function(){
-        $("#title").removeClass("is-invalid");
         $("#wallpaper").removeClass("is-invalid");
-        var title = $("#title").val();
-        var desc = $("#desc").val(); 
         var wallpaper = $("#wallpaper").prop("files")[0];
-        if(!title){
-            $("#title").addClass("is-invalid");
-            return; 
-        }
         if(!wallpaper){
             $("#wallpaper").addClass("is-invalid");
             return; 
@@ -112,8 +97,7 @@
                     var database = firebase.database().ref("images").child(editor);
                     var imageid = database.push().key;
                     var image = {
-                        "url": downloadURL, 
-                        "title": title, 
+                        "url": downloadURL,  
                     };
                     database.child(imageid).set(image, function(err){
                         alert("Image saved..");
