@@ -58,8 +58,8 @@
 <script>
     var user = firebase.auth().currentUser;
 
-    if(user)
-    {
+    //if(user)
+    
       console.log(user.uid);
        var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
        $("#selected-thumbnail").hide();
@@ -97,15 +97,15 @@
         }
     
 
-        var database = firebase.database().ref("Editors/"+ediname);
-        database.once("value").then(function(snapshot){
+        var database = firebase.firestore().collection("Editors").doc(ediname);
+        database.get().then(function(snapshot){
         console.log("Its in database");
-        if(snapshot.exists()){
+        if(snapshot.exists){
             $("#result").attr("class", "alert alert-danger");
             $("#result").html("Editor already exist");
             resetForm();
         }
-        else{
+        else{ 
                 //1. upload the selected thumbnail to firebase storage
                 
                 console.log("Its in database Else");
@@ -128,7 +128,7 @@
                             var edi = {
                                 "thumbnail": downloadURL, 
                             };
-                            database.set(edi, function(err){
+                            database.set(edi).then(function(err){
                                 if(err){
                                     $("#result").attr("class", "alert alert-danger");
                                     $("#result").html(err.message);
@@ -145,15 +145,15 @@
             }
         });
     });
+    
     function resetForm(){
        $("#editors-form")[0].reset(); 
        $("#selected-thumbnail").fadeOut();
        $("#upload-progress").html("0%");
     }
 
-    var dbEditors = firebase.database().ref("Editors");
-    dbEditors.on("value", function(Editors){
-        if(Editors.exists()){
+     var database = firebase.firestore().collection("Editors");
+     database.onSnapshot(function(Editors){
             console.log("You are in the Display Column");
             var Editorshtml = ""; 
             Editors.forEach(function(editor){
@@ -161,20 +161,18 @@
                 Editorshtml += "<tr>";
                 //for editor's name
                 Editorshtml += "<td>";
-                Editorshtml += editor.key;
+                Editorshtml += editor.id;
                 Editorshtml += "</td>";
                 
                 //for editor's thumbnail
                 Editorshtml+= "<td> <img width='250' height='150' src='";
-                Editorshtml += editor.val().thumbnail;
+                Editorshtml += editor.data().thumbnail;
                 Editorshtml += "' /></td>";
                 
                 Editorshtml += "</tr>";
             });
             $("#editors").html(Editorshtml);
-        }
-    });
-
- }     
+        
+   });
+     
 </script>
-            

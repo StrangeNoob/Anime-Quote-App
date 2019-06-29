@@ -57,10 +57,10 @@
         previewWallpaper(this);
     });
     
-    var dbEditors = firebase.database().ref("Editors");
-     dbEditors.once("value").then(function(editors){
+    var dbEditors = firebase.firestore().collection("Editors");
+     dbEditors.get().then(function(editors){
         editors.forEach(function(editor){
-            $("#editor").append("<option value='"+editor.key+"'>"+editor.key+"</option>");     
+            $("#editor").append("<option value='"+editor.id+"'>"+editor.id+"</option>");     
         });
     });
     
@@ -94,15 +94,17 @@
             },
             function complete(){
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    var database = firebase.database().ref("images").child(editor);
-                    var imageid = database.push().key;
+                    var database = firebase.firestore().collection("images").doc(editor);
                     var image = {
                         "url": downloadURL,  
                     };
-                    database.child(imageid).set(image, function(err){
-                        alert("Image saved..");
-                        resetForm();
+                    database.set(image,{merge: true}).then(function(err){
+                       if(!err) 
+                       {    alert("Image saved..");
+                            resetForm();
+                        }
                     });
+                       
                 }); 
             }
         );
