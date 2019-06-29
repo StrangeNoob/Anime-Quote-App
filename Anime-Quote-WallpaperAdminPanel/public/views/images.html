@@ -95,10 +95,12 @@
             function complete(){
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     var database = firebase.firestore().collection("images").doc(editor);
+                   // database.addCollection(imagename);
                     var image = {
-                        "url": downloadURL,  
+                        "url": downloadURL,
+                        "likes": 0,  
                     };
-                    database.set(image,{merge: true}).then(function(err){
+                    database.collection(imagename).set(image).then(function(err){
                        if(!err) 
                        {    alert("Image saved..");
                             resetForm();
