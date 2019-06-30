@@ -94,16 +94,20 @@
             },
             function complete(){
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    var database = firebase.firestore().collection("images").doc(editor);
+                    var database = firebase.firestore();
                    // database.addCollection(imagename);
-                    var image = {
+                    var image =  Object.assign({},{
                         "url": downloadURL,
                         "likes": 0,  
-                    };
-                    database.collection(imagename).set(image).then(function(err){
+                    });
+                    console.log(editor);
+                    database.collection("images").doc(editor).collection(""+imagename+"").add(image).then(function(err){
                        if(!err) 
                        {    alert("Image saved..");
                             resetForm();
+                        }
+                        else{
+                            console.log("Error : ", err);
                         }
                     });
                        
