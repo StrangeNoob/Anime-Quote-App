@@ -18,8 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void intialize()
   {
-      collectionReference.getDocuments().then((snapshot)
-      {
+      print("eorking");
+      collectionReference.getDocuments().then((snapshot){
           snapshot.documents.forEach((doc){
             wallpapersList.add(doc);
           });
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    intialize();
     return new Scaffold(
 
         body: wallpapersList != null
