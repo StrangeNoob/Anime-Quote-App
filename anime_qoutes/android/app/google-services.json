@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "680703404288",
+    "firebase_url": "https://wallpaper-app-adbc8.firebaseio.com",
+    "project_id": "wallpaper-app-adbc8",
+    "storage_bucket": "wallpaper-app-adbc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680703404288:android:e51d421cdbadc9f3",
+        "android_client_info": {
+          "package_name": "flutter.example.com.anime_qoutes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680703404288-v10d029jqlf218kv18tv2av9708jq6k6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "flutter.example.com.anime_qoutes",
+            "certificate_hash": "1402e073b37c874e6f5de2357265bd3d6aee7794"
+          }
+        },
+        {
+          "client_id": "680703404288-2jor21pkmsv09m9u7je4srv2qqpkbrh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh9qoit5n-quaH5t0iLn00jr4OoTfX-R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680703404288-2jor21pkmsv09m9u7je4srv2qqpkbrh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:async';
+import './FullScreenImagePath.dart';
 
-class Homescreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+ // StreamSubscription<QuerySnapshot> subscription;
+  List<DocumentSnapshot> wallpapersList;
+  final CollectionReference collectionReference = Firestore.instance.collection("images");
+
+
+  void intialize()
+  {
+      collectionReference.getDocuments().then((snapshot)
+      {
+          snapshot.documents.forEach((doc){
+            wallpapersList.add(doc);
+          });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.cyan,
-      child: Center(
-       child: new Text(
-        "Home Screen ",
-        style: TextStyle( fontSize: 75, fontStyle: FontStyle.italic),
-       ),
-      ),
-    );
+
+    return new Scaffold(
+
+        body: wallpapersList != null
+            ? new StaggeredGridView.countBuilder(
+          padding: const EdgeInsets.all(8.0),
+          crossAxisCount: 4,
+          itemCount: wallpapersList.length,
+          itemBuilder: (context, i) {
+            String imgPath = wallpapersList[i].data['url'];
+            print(imgPath);
+            return new Material(
+              elevation: 8.0,
+              borderRadius:
+              new BorderRadius.all(new Radius.circular(8.0)),
+              child: new InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                          new FullScreenImagePage(imgPath)));
+                },
+                child: new Hero(
+                  tag: imgPath,
+                  child: new FadeInImage(
+                    image: new NetworkImage(imgPath),
+                    fit: BoxFit.cover,
+                    placeholder: new AssetImage("assets/wallfy.png"),
+                  ),
+                ),
+              ),
+            );
+          },
+          staggeredTileBuilder: (i) =>
+          new StaggeredTile.count(2, i.isEven ? 2 : 3),
+          mainAxisSpacing: 8.0,
+          crossAxisSpacing: 8.0,
+        )
+            : new Center(
+          child: new CircularProgressIndicator(),
+        ));
   }
 }
+

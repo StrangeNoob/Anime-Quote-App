@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   int currentIndex = 0;
   TabController _controller;
   List<Widget> pages = [
-    Homescreen(),
+    HomeScreen(),
     Favourites(),
     Editors(),
     Settings()

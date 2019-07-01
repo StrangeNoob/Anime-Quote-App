@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -28,7 +28,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_screenutil: ^0.4.2
-
+  firebase_auth:
+  google_sign_in:
+  flutter_staggered_grid_view:
+  firebase_database:
+  firebase_storage:
+  cloud_firestore:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -47,6 +52,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/images/splashscreen.gif
+    - assets/images/wallfy.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
