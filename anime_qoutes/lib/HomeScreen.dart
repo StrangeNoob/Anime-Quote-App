@@ -10,28 +10,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
- // StreamSubscription<QuerySnapshot> subscription;
+  StreamSubscription<QuerySnapshot> subscription;
+  QuerySnapshot querySnapshot;
   List<DocumentSnapshot> wallpapersList;
-  final CollectionReference collectionReference = Firestore.instance.collection("images");
+ final CollectionReference collectionReference = Firestore.instance.collection("images");
 
-
-  void intialize()
-  {
-      print("eorking");
-      collectionReference.getDocuments().then((snapshot){
-          snapshot.documents.forEach((doc){
-            wallpapersList.add(doc);
-          });
-      });
-  }
 
   @override
+  void initState() {
+    subscription = collectionReference.snapshots().listen((datasnapshot){
+      setState(() async {
+        print(datasnapshot);
+        print("Hello");
+        var firestore = Firestore.instance;
+        QuerySnapshot qn = await firestore.collection("images").getDocuments();
+        wallpapersList = qn.documents;
+      });
+    });
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    intialize();
     return new Scaffold(
 
-        body: wallpapersList != null
+        body:
+            wallpapersList != null
             ? new StaggeredGridView.countBuilder(
           padding: const EdgeInsets.all(8.0),
           crossAxisCount: 4,
