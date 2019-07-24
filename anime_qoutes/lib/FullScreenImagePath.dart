@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
-class FullScreenImagePage extends StatelessWidget {
+class FullScreenImagePage extends StatefulWidget {
   String imgPath;
   FullScreenImagePage(this.imgPath);
 
+  @override
+  _FullScreenImagePageState createState() => _FullScreenImagePageState();
+}
+
+class _FullScreenImagePageState extends State<FullScreenImagePage> {
   final LinearGradient backgroundGradient = new LinearGradient(
       colors: [new Color(0x10000000), new Color(0x30000000)],
       begin: Alignment.topLeft,
@@ -20,8 +25,8 @@ class FullScreenImagePage extends StatelessWidget {
               new Align(
                 alignment: Alignment.center,
                 child: new Hero(
-                  tag: imgPath,
-                  child: new Image.network(imgPath),
+                  tag: widget.imgPath,
+                  child: new Image.network(widget.imgPath),
                 ),
               ),
               new Align(
