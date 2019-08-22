@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FullScreenImagePage extends StatefulWidget {
-  String imgPath;
+  final String imgPath;
   FullScreenImagePage(this.imgPath);
 
   @override

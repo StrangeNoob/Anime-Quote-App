@@ -99,15 +99,22 @@
                     var image =  Object.assign({},{
                         "url": downloadURL,
                         "likes": 0,  
+                        "editor" : editor,  
                     });
                     console.log(editor);
-                    database.collection("images").doc(editor).collection(""+imagename+"").add(image).then(function(err){
+                    database.collection("images").add({
+                        "url": downloadURL,
+                        "likes": 0,
+                        "editor" : editor,  
+                    }).then(function(err){
                        if(!err) 
                        {    alert("Image saved..");
                             resetForm();
                         }
                         else{
                             console.log("Error : ", err);
+                            console.log(" Over ");
+                            resetForm();
                         }
                     });
                        

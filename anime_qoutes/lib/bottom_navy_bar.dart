@@ -5,13 +5,14 @@ import 'package:flutter/widgets.dart';
 
 class BottomNavyBar extends StatefulWidget {
 
-  int selectedIndex;
+ 
   final double iconSize;
   final Color backgroundColor;
   final bool showElevation;
   final List<BottomNavyBarItem> items;
   final ValueChanged<int> onItemSelected;
-
+  int selectedIndex;
+  
   BottomNavyBar(
       {Key key,
         this.selectedIndex = 0,

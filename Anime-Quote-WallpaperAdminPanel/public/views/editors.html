@@ -62,6 +62,10 @@
     
       console.log(user.uid);
        var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
+       $("#save-editor").click(function(){
+           resetForm();
+       });       
+       
        $("#selected-thumbnail").hide();
         function previewThumbnail(thumbnail){
             if(thumbnail.files && thumbnail.files[0]){
@@ -146,6 +150,7 @@
         });
     });
     
+
     function resetForm(){
        $("#editors-form")[0].reset(); 
        $("#selected-thumbnail").fadeOut();

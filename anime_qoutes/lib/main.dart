@@ -8,9 +8,8 @@ import './Settings.dart';
 
 
 void main(){
-
-
   runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       )
   );
@@ -46,61 +45,58 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     );
   }
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
-        controller: _controller,
-        children: pages.toList(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: TabBarView(
+          controller: _controller,
+          children: pages.toList(),
+        ),
+        appBar: AppBar(
+          elevation: 1,
+          title: Text("Anime Quote"),
+          backgroundColor: Colors.yellow,
+        ),
+        bottomNavigationBar: BottomNavyBar(
+          backgroundColor: Colors.black,
+          selectedIndex: currentIndex,
+          showElevation: true,
+          onItemSelected: (index) => setState(() {
+            currentIndex = index;
+            _controller.animateTo(currentIndex);
+            setState(() {
+              print(index);
+            });
+          }),
+          items: [
+            BottomNavyBarItem(
+                icon: Icon(Icons.home),
+                title: Text('Home'),
+                activeColor: Colors.cyan,
+                inactiveColor: Colors.white
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.favorite_border),
+                title: Text('Favourites'),
+                activeColor: Colors.green,
+                inactiveColor: Colors.white
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.person_outline),
+                title: Text('Editors'),
+                activeColor: Colors.deepPurple,
+                inactiveColor: Colors.white
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.settings),
+                title: Text('Settings'),
+                activeColor: Colors.blue,
+                inactiveColor: Colors.white
+            ),
+          ],
+        ),
       ),
-      appBar: AppBar(
-        elevation: 1,
-        title: Text("Anime Quote"),
-        backgroundColor: Colors.yellow,
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        backgroundColor: Colors.black,
-        selectedIndex: currentIndex,
-        showElevation: true,
-        onItemSelected: (index) => setState(() {
-          currentIndex = index;
-          _controller.animateTo(currentIndex);
-          setState(() {
-            print(index);
-          });
-        }),
-        items: [
-          BottomNavyBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-              activeColor: Colors.cyan,
-              inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.favorite_border),
-              title: Text('Favourites'),
-              activeColor: Colors.green,
-              inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.person_outline),
-              title: Text('Editors'),
-              activeColor: Colors.deepPurple,
-              inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.settings),
-              title: Text('Settings'),
-              activeColor: Colors.blue,
-              inactiveColor: Colors.white
-          ),
-        ],
-      ),
-
     );
   }
 }

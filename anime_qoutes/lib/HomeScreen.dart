@@ -11,27 +11,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   StreamSubscription<QuerySnapshot> subscription;
-  QuerySnapshot querySnapshot;
-  List<DocumentSnapshot> wallpapersList,EditorList;
+  List<DocumentSnapshot> wallpapersList,editorList;
  final CollectionReference collectionReference = Firestore.instance.collection("images");
 
 
   @override
   void initState() {
-    subscription = collectionReference.snapshots().listen((datasnapshot){
-      setState(() {
-        print(datasnapshot.documents.asMap());
-        EditorList = datasnapshot.documents;
-        wallpapersList=EditorList;
-        print(wallpapersList.length);
-             });
-          }); 
-             super.initState();
-  }  
+      super.initState();
+      subscription = collectionReference.snapshots().listen((datasnapshots){
+        setState(() {
+         wallpapersList= datasnapshots.documents; 
+        });
+      });
+  } 
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
            @override
            Widget build(BuildContext context) {
              return new Scaffold(
-         
                  body:
                      wallpapersList != null
                      ? new StaggeredGridView.countBuilder(
@@ -43,22 +43,19 @@ class _HomeScreenState extends State<HomeScreen> {
                      print(imgPath);
                      return new Material(
                        elevation: 8.0,
-                       borderRadius:
-                       new BorderRadius.all(new Radius.circular(8.0)),
+                       borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
                        child: new InkWell(
                          onTap: () {
-                           Navigator.push(
-                               context,
-                               new MaterialPageRoute(
-                                   builder: (context) =>
-                                   new FullScreenImagePage(imgPath)));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => FullScreenImagePage(imgPath)));
+                                print(imgPath);
                          },
                          child: new Hero(
                            tag: imgPath,
                            child: new FadeInImage(
                              image: new NetworkImage(imgPath),
                              fit: BoxFit.cover,
-                             placeholder: new AssetImage("assets/wallfy.png"),
+                             placeholder: new AssetImage("assets/images/wallfy.png"),
                            ),
                          ),
                        ),
@@ -71,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  )
                      : new Center(
                    child: new CircularProgressIndicator(),
-                 ));
+                 )
+              );
            }
          }
