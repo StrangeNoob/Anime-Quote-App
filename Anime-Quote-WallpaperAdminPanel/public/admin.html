@@ -5,8 +5,7 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
             <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>            
             <link rel="stylesheet" href="css/style.css" />
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        
+            
     </head>
     
     <body class="h-100">
@@ -26,7 +25,6 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                     >
-                       sipun63427452@gmail.com
                     </button>
 
                     <div 
@@ -54,6 +52,11 @@
                             <span class="text-dark">Editors</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="switchView('views/viewimages.html')">
+                            <span class="text-dark">View Images</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-10">
@@ -62,7 +65,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>>
         <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-auth.js"></script>>
         <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-firestore.js"></script>
@@ -77,6 +80,7 @@
                     }
                     else{
                         console.log(user.uid);
+                        $('#user-email').html(user.email);
                     }
                 });
                 function switchView(view){

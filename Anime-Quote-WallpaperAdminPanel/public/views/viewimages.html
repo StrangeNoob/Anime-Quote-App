@@ -1,0 +1,41 @@
+<h2>View Images</h2>
+<hr />
+<body>
+     <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Editor</th>
+                        <th>Images</th>
+                    </tr>
+                </thead>
+                <tbody id="editors">
+                 
+                </tbody>
+            </table>
+</body>
+<script>
+     var database = firebase.firestore().collection("images");
+     database.onSnapshot(function(images){
+        var Imageshtml = ""; 
+        images.forEach(function(image) {
+            console.log(image.data().editor+" "+image.data().url);
+            Imageshtml += "<tr>";
+                //for editor's name
+                Imageshtml += "<td>";
+                Imageshtml += image.data().editor;
+                Imageshtml += "</td>";
+                
+                //for editor's thumbnail
+                Imageshtml+= "<td> <img width='250' height='250' src='";
+                Imageshtml += image.data().url;
+                Imageshtml += "' /></td>";
+                Imageshtml += "<td> Edit </td >";
+                Imageshtml += "<td> Delete </td>";
+
+
+                Imageshtml += "</tr>";
+        });
+        $("#editors").html(Imageshtml);
+     });
+
+</script>
