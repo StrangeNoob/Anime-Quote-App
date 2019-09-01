@@ -8,7 +8,7 @@
                         <th>Images</th>
                     </tr>
                 </thead>
-                <tbody id="editors">
+                <tbody id="Images">
                  
                 </tbody>
             </table>
@@ -29,13 +29,13 @@
                 Imageshtml+= "<td> <img width='250' height='250' src='";
                 Imageshtml += image.data().url;
                 Imageshtml += "' /></td>";
-                Imageshtml += "<td> Edit </td >";
+                Imageshtml += "<td><a href=''>Edit</a></td >";
                 Imageshtml += "<td> Delete </td>";
 
 
                 Imageshtml += "</tr>";
         });
-        $("#editors").html(Imageshtml);
+        $("#Images").html(Imageshtml);
      });
-
+     
 </script>

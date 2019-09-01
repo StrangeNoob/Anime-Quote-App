@@ -61,10 +61,7 @@
     //if(user)
     
       console.log(user.uid);
-       var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];
-       $("#save-editor").click(function(){
-           resetForm();
-       });       
+       var validImageTypes = ["image/gif", "image/jpeg", "image/png","image/jpg"];    
        
        $("#selected-thumbnail").hide();
         function previewThumbnail(thumbnail){
@@ -101,7 +98,7 @@
         }
     
 
-        var database = firebase.firestore().collection("Editors").doc(ediname);
+        var database = firebase.firestore().collection("Editors").doc(""+ediname+"");
         database.get().then(function(snapshot){
         console.log("Its in database");
         if(snapshot.exists){
@@ -111,7 +108,6 @@
         }
         else{ 
                 //1. upload the selected thumbnail to firebase storage
-                
                 console.log("Its in database Else");
                 var name = thumbnail["name"];
                 var ext = name.substring(name.lastIndexOf("."), name.length);

@@ -1,5 +1,5 @@
 // Web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyADB7FqX6lBeCHNLPqqmNbG8z_oDIEw0uw",
   authDomain: "wallpaper-app-adbc8.firebaseapp.com",
   databaseURL: "https://wallpaper-app-adbc8.firebaseio.com",
