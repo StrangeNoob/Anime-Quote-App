@@ -1,42 +1,54 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:anime_qoutes/FullScreenImagePath.dart';
 
-class HomeScreen extends StatefulWidget {
+class ViewEditors extends StatefulWidget {
+  final String editorName;
+  ViewEditors(this.editorName);
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ViewEditorsState createState() => _ViewEditorsState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ViewEditorsState extends State<ViewEditors> {
+  
   StreamSubscription<QuerySnapshot> subscription;
-  List<DocumentSnapshot> wallpapersList,editorList;
- final CollectionReference collectionReference = Firestore.instance.collection("images");
-
-
+  List<DocumentSnapshot> allImages;
+  final CollectionReference collectionReference = Firestore.instance.collection("images");
+  
   @override
   void initState() {
-      super.initState();
-      subscription = collectionReference.snapshots().listen((datasnapshots){
+  
+    super.initState();
+    subscription = collectionReference.snapshots().listen((datasnapshots){
         setState(() {
-         wallpapersList= datasnapshots.documents; 
+              allImages=datasnapshots.documents;
+              });
+              allImages.retainWhere((doc)=> doc.data['editor']==widget.editorName);
         });
-      });
-  } 
-  @override
+  }
+    @override
   void dispose() {
+  
     subscription?.cancel();
     super.dispose();
   }
-           @override
-           Widget build(BuildContext context) {
-             return new Container(
-               child: wallpapersList != null
-                     ? new GridView.count(
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: new AppBar(
+          title: Text(widget.editorName),
+          elevation: 2.0,
+          titleSpacing: 0.50,
+          backgroundColor: Colors.black.withAlpha(4),
+        ),
+        body: Container(
+        color: Colors.white,
+        child: GridView.count(
           crossAxisCount:  2,
-          children: List.generate(wallpapersList.length,(index){
-            String   imgPath =wallpapersList[index].data['url'];
+          children: List.generate(allImages.length,(index){
+            String   imgPath =allImages[index].data['url'];
             return new Padding(
               padding: EdgeInsets.all(3.0),
               child: new Material(
@@ -60,9 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                        );
           })
           )
-                     : new Center(
-                   child: new CircularProgressIndicator(),
-                 )
-              );
-           }
-         }
+        
+      ),
+    );
+  }
+}

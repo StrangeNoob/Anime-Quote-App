@@ -30,6 +30,7 @@ dependencies:
   firebase_database:
   firebase_storage:
   cloud_firestore:
+  flare_flutter:
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
   assets:
     - assets/images/splashscreen.gif
     - assets/images/wallfy.png
+    - assets/images/instagram_like.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
